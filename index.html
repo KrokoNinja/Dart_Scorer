@@ -1,14 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles/style.css">
-    <script src="js/script.js"></script>
-    <title>Darts Scorer</title>
-</head>
-<body>
-    
-</body>
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="styles/style.css" />
+		<script src="js/script.js"></script>
+		<title>Darts Scorer</title>
+	</head>
+	<body>
+		<div id="scoreboard">
+			<div id="client" class="player">
+                <p class="name" id="player_name">Me</p>
+                <p class="sets">Sets: <p id="player_sets_count">0</p></p>
+                <p class="legs">Legs: <p id="player_legs_count">0</p></p>
+                <p class="score" id="player_score">501</p>
+                <p class="checkout" id="player_checkout">T20 T20 BULL</p>
+                <p class="last_score">Last Score: <p id="player_last">0</p></p>
+                <p class="average">AVG: <p id="player_average_leg">0.00</p> / <p id="player_average_overall">0.00</p></p>
+                <p class="doubles">DQ: <p id="player_doubles">0.00</p>%</p>
+            </div>
+			<div id="opponent" class="player">
+                <p class="name" id="opponent_name">Opponent</p>
+                <p class="sets">Sets: <p id="opponent_sets_count">0</p></p>
+                <p class="legs">Legs: <p id="opponent_legs_count">0</p></p>
+                <p class="score" id="opponent_score">501</p>
+                <p class="checkout" id="opponent_chackout">T20 T20 BULL</p>
+                <p class="last_score">Last Score: <p id="opponent_last">0</p></p>
+                <p class="average">AVG: <p id="opponent_average_leg">0.00</p> / <p id="opponent_average_overall">0.00</p></p>
+                <p class="doubles">DQ: <p id="opponent_double_percentage">0.00</p>%</p>
+            </div>
+		</div>
+		<div id="input">
+            <button id="undo">UNDO</button>
+			<p id="user_input">0</p>
+            <button id="togo">TO GO</button>
+			<div id="input_grid">
+                <button class="input">26</button>
+                <button class="input">1</button>
+                <button class="input">2</button>
+                <button class="input">3</button>
+                <button class="input">60</button>
+                <button class="input">41</button>
+                <button class="input">4</button>
+                <button class="input">5</button>
+                <button class="input">6</button>
+                <button class="input">85</button>
+                <button class="input">45</button>
+                <button class="input">7</button>
+                <button class="input">8</button>
+                <button class="input">9</button>
+                <button class="input">100</button>
+                <button class="input">CLR</button>
+                <button class="input">0</button>
+                <button class="input" type="submit">no Score</button>
+			</div>
+		</div>
+	</body>
 </html>
