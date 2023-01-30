@@ -1,3 +1,4 @@
+/* CSS Reset */
 html {
     box-sizing: border-box;
     font-size: 16px;
@@ -22,9 +23,38 @@ img {
     height: auto;
 }
 
+/* Custom styles */
+
+/* Make paragraphs unselectable */
 p {
     -webkit-user-select: none; /* Safari */
     -moz-user-select: none; /* Firefox */
     -ms-user-select: none; /* IE10+/Edge */
     user-select: none; /* Standard */
+}
+
+.player {
+    border: 1px solid red;
+}
+
+#scoreboard {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+#user_input {
+    display: flex;
+}
+
+#input_grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(6, 1fr);
+}
+
+#input_score {
+    grid-column-start: 2;
+    grid-column-end: span 3;
+    text-align: center;
+
 }
