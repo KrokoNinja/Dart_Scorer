@@ -39,6 +39,22 @@ p {
 
 .input {
     font-size: 3vmax;
+    background-color: darkgray;
+    border: none;
+}
+
+.num {
+    border-bottom: 1px solid black;
+}
+
+.left {
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
+}
+
+.right {
+    border-left: 1px solid black;
+    border-bottom: 1px solid black;
 }
 
 #scoreboard {
@@ -53,7 +69,9 @@ p {
 #input_grid {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    grid-template-rows: repeat(6, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    height: 50vh;
+    border: 1px solid black;
 }
 
 #input_score_wrapper {
