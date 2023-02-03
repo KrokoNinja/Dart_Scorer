@@ -25,10 +25,6 @@ img {
 
 /* Custom styles */
 
-body {
-    background-color: aliceblue;
-}
-
 /* Make paragraphs unselectable */
 p {
     -webkit-user-select: none; /* Safari */
@@ -37,72 +33,7 @@ p {
     user-select: none; /* Standard */
 }
 
-.player {
-    border: 1px solid red;
-}
-
-.input {
-    font-size: 3vmax;
-    background-color: darkgray;
-    border: none;
-}
-
-.num,
-.left,
-.right,
-#undo,
-#input_score_wrapper,
-#togo,
-#clear,
-#enter {
-    border-bottom: 1px solid black;
-}
-
-.num {
-    border-left: 1px solid black;
-}
-
-.right {
-    border-left: 1px solid black;
-}
-
-#scoreboard {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-}
-
-#user_input {
-    display: flex;
-}
-
-#input_grid {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    grid-template-rows: repeat(5, 1fr);
-    gap: 0;
-    width: 100vw;
-    height: 50vh;
-    background-color: darkgray;
-}
-
-#input_score_wrapper {
-    grid-column-start: 2;
-    grid-column-end: span 3;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-left: 1px solid black;
-    border-right: 1px solid black;
-}
-
-#input_score {
-    text-align: center;
-}
-
-#clear {
-    border-left: 1px solid black;
-}
-
-#enter {
-    border-left: 1px solid black;
+button {
+    width: 4vmax;
+    height: 4vmax;
 }
