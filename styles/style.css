@@ -25,6 +25,10 @@ img {
 
 /* Custom styles */
 
+body {
+    font-family: 'Oswald', sans-serif !important;
+}
+
 /* Make paragraphs unselectable */
 p {
     -webkit-user-select: none; /* Safari */
@@ -38,8 +42,16 @@ button {
     height: 100%;
 }
 
-.row {
-    height: 20%;
+.name {
+    font-size: 1.5rem;
+}
+
+.score {
+    font-size: 3rem;
+}
+
+.checkout {
+    font-size: 1.25rem;
 }
 
 .hotkey {
@@ -64,6 +76,19 @@ button {
     color: white;
 }
 
+#scoreboard > .row > .col > .stats > p {
+    margin-bottom: 0.5rem !important;
+}
+
+#input > .row {
+    height: 20%;
+}
+
 #btn-input-score {
     pointer-events: none;
+}
+
+#undo,
+#togo {
+    border-width: 5px;
 }
