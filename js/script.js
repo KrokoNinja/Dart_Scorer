@@ -8,10 +8,15 @@ let opponent_legs_score = document.getElementById("opponent_legs_count")
 let opponent_sets_score = document.getElementById("opponent_sets_count")
 let player_last_score = document.getElementById("player_last")
 let opponent_last_score = document.getElementById("opponent_last")
+let player_average_leg = document.getElementById("player_average_leg")
 
 const not_checkable = [169, 168, 166, 165, 163, 162, 159]
 let old_player_score = []
+let player_rounds = 0
+let player_rounds_leg = 0
 let player_last_scored = [0]
+let player_leg_average = []
+let player_overall_average = []
 
 for(let i = 0; i < buttons.length; i++){
     buttons[i].addEventListener("click", function (){
@@ -36,7 +41,11 @@ for(let i = 0; i < buttons.length; i++){
                 player_score.innerHTML = parseInt(player_score.innerHTML) - parseInt(input_score.innerHTML)
                 player_last_scored.push(parseInt(input_score.innerHTML))
                 player_last_score.innerHTML = player_last_scored[player_last_scored.length - 1]
-                input_score.innerHTML = 0;
+                input_score.innerHTML = 0
+                player_rounds += 1
+                player_rounds_leg += 1
+                player_leg_average = (501 - parseInt(player_score.innerHTML)) / player_rounds_leg
+                player_average_leg.innerHTML = parseFloat(player_leg_average).toFixed(2);
             }
         }
         if (buttons[i].classList.contains("hotkey")){
@@ -45,6 +54,10 @@ for(let i = 0; i < buttons.length; i++){
                 player_score.innerHTML = parseInt(player_score.innerHTML) - parseInt(buttons[i].value)
                 player_last_scored.push(parseInt(buttons[i].value))
                 player_last_score.innerHTML = player_last_scored[player_last_scored.length - 1]
+                player_rounds += 1
+                player_rounds_leg += 1
+                player_leg_average = (501 - parseInt(player_score.innerHTML)) / player_rounds_leg
+                player_average_leg.innerHTML = parseFloat(player_leg_average).toFixed(2);
             }
         }
         if (buttons[i].value == "undo"){
