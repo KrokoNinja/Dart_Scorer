@@ -47,14 +47,7 @@ for(let i = 0; i < buttons.length; i++){
                 player_leg_scored.push(parseInt(input_score.innerHTML))
                 player_last_score.innerHTML = player_last_scored[player_last_scored.length - 1]
                 input_score.innerHTML = 0
-                player_rounds += 1
-                player_rounds_leg += 1
-                player_scored_leg = player_leg_scored.reduce(function (a,b){return a+b;})
-                player_scored = player_last_scored.reduce(function (a,b){return a+b;})
-                player_leg_average = player_scored_leg / player_rounds_leg
-                player_average_leg.innerHTML = parseFloat(player_leg_average).toFixed(2);
-                player_overall_average = player_scored / player_rounds
-                player_average_overall.innerHTML = parseFloat(player_overall_average).toFixed(2);
+                calculateAverage("okay")
             }
         }
         if (buttons[i].classList.contains("hotkey")){
@@ -64,14 +57,8 @@ for(let i = 0; i < buttons.length; i++){
                 player_last_scored.push(parseInt(buttons[i].value))
                 player_leg_scored.push(parseInt(buttons[i].value))
                 player_last_score.innerHTML = player_last_scored[player_last_scored.length - 1]
-                player_rounds += 1
-                player_rounds_leg += 1
-                player_scored_leg = player_leg_scored.reduce(function (a,b){return a+b;})
-                player_scored = player_last_scored.reduce(function (a,b){return a+b;})
-                player_leg_average = player_scored_leg / player_rounds_leg
-                player_average_leg.innerHTML = parseFloat(player_leg_average).toFixed(2);
-                player_overall_average = player_scored / player_rounds
-                player_average_overall.innerHTML = parseFloat(player_overall_average).toFixed(2);
+                input_score.innerHTML = 0
+                calculateAverage("hotkey")
             }
         }
         if (buttons[i].value == "undo"){
@@ -85,6 +72,8 @@ for(let i = 0; i < buttons.length; i++){
                 player_score.innerHTML = old_player_score[old_player_score.length - 1]
                 old_player_score.pop()
                 player_last_scored.pop()
+                player_leg_scored.pop()
+                calculateAverage("undo")
                 player_last_score.innerHTML = player_last_scored[player_last_scored.length - 1]
             }
         }
@@ -96,18 +85,46 @@ for(let i = 0; i < buttons.length; i++){
                 player_score.innerHTML = 501
                 opponent_score.innerHTML = 501
                 player_legs_score.innerHTML = parseInt(player_legs_score.innerHTML) + 1
-                player_last_scored.push(0)
                 player_last_score.innerHTML = player_last_scored[player_last_scored.length - 1]
-                player_rounds += 1
-                player_rounds_leg = 0
-                player_scored_leg = player_leg_scored.reduce(function (a,b){return a+b;})
-                player_scored = player_last_scored.reduce(function (a,b){return a+b;})
-                player_leg_scored = [0]
-                player_leg_average = 0
-                player_average_leg.innerHTML = parseFloat(player_leg_average).toFixed(2);
-                player_overall_average = player_scored / player_rounds
-                player_average_overall.innerHTML = parseFloat(player_overall_average).toFixed(2);
+                calculateAverage("togo")
             }
         }
     })
+}
+
+function calculateAverage(value) {
+    if (value == "togo"){
+        player_last_scored.push(0)
+        player_rounds += 1
+        player_rounds_leg = 0
+        player_leg_scored = [0]
+    }
+    else if (value == "undo") {
+        player_rounds -= 1
+        player_rounds_leg -= 1
+        if (player_rounds_leg == 0 && player_rounds != 0){
+            player_leg_average = 0
+        }
+        else if (player_rounds == 0) {
+            player_leg_average = 0
+            player_overall_average = 0
+        }
+    }
+    else {
+        player_rounds += 1
+        player_rounds_leg += 1
+    }
+    player_scored_leg = player_leg_scored.reduce(function (a,b){return a+b;})
+    player_scored = player_last_scored.reduce(function (a,b){return a+b;})
+    if (value == "togo"){
+        player_leg_average = 0
+    }
+    else if (player_rounds_leg != 0) {
+        player_leg_average = player_scored_leg / player_rounds_leg
+    }
+    if (player_rounds != 0){
+        player_overall_average = player_scored / player_rounds
+    }
+    player_average_leg.innerHTML = parseFloat(player_leg_average).toFixed(2);
+    player_average_overall.innerHTML = parseFloat(player_overall_average).toFixed(2);
 }
