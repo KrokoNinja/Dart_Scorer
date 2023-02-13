@@ -69,20 +69,7 @@ function buttonPressed(key, value = 0){
             calculateAverage("okay")
             break;
         case "undo":
-            input_score.innerHTML = 0;
-            input_score.classList.add("btn-outline-dark")
-            input_score.classList.remove("btn-outline-warning")
-            if (old_player_score.length > 0) {
-                if (parseInt(player_score.innerHTML) == 501) {
-                    player_legs_score.innerHTML = parseInt(player_legs_score.innerHTML) - 1
-                }
-                player_score.innerHTML = old_player_score[old_player_score.length - 1]
-                old_player_score.pop()
-                player_last_scored.pop()
-                player_leg_scored.pop()
-                player_last_score.innerHTML = player_last_scored[player_last_scored.length - 1]
-                calculateAverage("undo")
-            }
+            undoScore()
             break;
         case "hotkey":
             old_player_score.push(parseInt(player_score.innerHTML))
@@ -115,14 +102,25 @@ function newLeg() {
     calculateAverage("togo")
 }
 
-function calculateAverage(key) {
-    if (key == "undo") {
-        player_rounds -= 1
-        if (player_rounds_leg[parseInt(player_legs_score.innerHTML)] - 1 != 0){
-            player_rounds_leg[parseInt(player_legs_score.innerHTML)] -= 1
+function undoScore() {
+    input_score.innerHTML = 0;
+    input_score.classList.add("btn-outline-dark")
+    input_score.classList.remove("btn-outline-warning")
+    if (old_player_score.length > 0) {
+        if (parseInt(player_score.innerHTML) == 501) {
+            player_legs_score.innerHTML = parseInt(player_legs_score.innerHTML) - 1
         }
-        else {
+        player_score.innerHTML = old_player_score[old_player_score.length - 1]
+        old_player_score.pop()
+        player_last_scored.pop()
+        player_leg_scored.pop()
+        player_last_score.innerHTML = player_last_scored[player_last_scored.length - 1]
+        player_rounds -= 1
+        if (player_rounds_leg.length >= parseInt(player_legs_score.innerHTML) + 2){
             player_rounds_leg.pop()
+        }
+        else if (player_rounds_leg[parseInt(player_legs_score.innerHTML)] - 1 >= 0){
+            player_rounds_leg[parseInt(player_legs_score.innerHTML)] -= 1
         }
         if (player_rounds_leg[parseInt(player_legs_score.innerHTML)] == 0 && player_rounds != 0){
             player_leg_average = 0
@@ -131,8 +129,12 @@ function calculateAverage(key) {
             player_leg_average = 0
             player_overall_average = 0
         }
+        calculateAverage("undo")
     }
-    else if (key !== "togo"){
+}
+
+function calculateAverage(key) {
+    if (key !== "togo" && key !== "undo"){
         player_rounds += 1
         player_rounds_leg[parseInt(player_legs_score.innerHTML)] += 1
     }
