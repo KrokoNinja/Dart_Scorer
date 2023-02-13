@@ -14,10 +14,9 @@ let player_average_overall = document.getElementById("player_average_overall")
 const not_checkable = [169, 168, 166, 165, 163, 162, 159]
 let old_player_score = []
 let player_rounds = 0
-let player_rounds_leg = 0
+let player_rounds_leg = [0]
 let player_last_scored = [0]
-let player_leg_scored = [0]
-let player_scored_leg = 0
+let player_leg_scored = []
 let player_scored = 0
 let player_leg_average = []
 let player_overall_average = []
@@ -30,38 +29,46 @@ for(let i = 0; i < buttons.length; i++){
         else if (!buttons[i].classList.contains("hotkey") && buttons[i].value != "togo" && buttons[i].value != "undo" && buttons[i].value != "okay") {
             input_score.innerHTML = buttons[i].value
         }
-        if(buttons[i].value === "clear"){
-            input_score.innerHTML = 0;
-            input_score.classList.add("btn-outline-dark")
-            input_score.classList.remove("btn-outline-warning")
-        }
         if (parseInt(input_score.innerHTML) > 180){
             input_score.classList.remove("btn-outline-dark")
             input_score.classList.add("btn-outline-warning")
         }
+        if(buttons[i].value == "clear"){
+            buttonPressed("clear")
+        }
         if (buttons[i].value == "okay"){
             if (parseInt(input_score.innerHTML) >= 0 && parseInt(input_score.innerHTML) <= 180 && parseInt(player_score.innerHTML) >= 0 && parseInt(player_score.innerHTML) > parseInt(input_score.innerHTML)){
-                old_player_score.push(parseInt(player_score.innerHTML))
-                player_score.innerHTML = parseInt(player_score.innerHTML) - parseInt(input_score.innerHTML)
-                player_last_scored.push(parseInt(input_score.innerHTML))
-                player_leg_scored.push(parseInt(input_score.innerHTML))
-                player_last_score.innerHTML = player_last_scored[player_last_scored.length - 1]
-                input_score.innerHTML = 0
-                calculateAverage("okay")
+                buttonPressed("okay")
             }
         }
         if (buttons[i].classList.contains("hotkey")){
             if(parseInt(player_score.innerHTML) > parseInt(buttons[i].value)){
-                old_player_score.push(parseInt(player_score.innerHTML))
-                player_score.innerHTML = parseInt(player_score.innerHTML) - parseInt(buttons[i].value)
-                player_last_scored.push(parseInt(buttons[i].value))
-                player_leg_scored.push(parseInt(buttons[i].value))
-                player_last_score.innerHTML = player_last_scored[player_last_scored.length - 1]
-                input_score.innerHTML = 0
-                calculateAverage("hotkey")
+                buttonPressed("hotkey", buttons[i].value)
             }
         }
         if (buttons[i].value == "undo"){
+            buttonPressed("undo")
+        }
+        if (buttons[i].value == "togo"){
+            if (parseInt(player_score.innerHTML) <= 170 && !not_checkable.includes(parseInt(player_score.innerHTML))){
+                newLeg()
+            }
+        }
+    })
+}
+
+function buttonPressed(key, value = 0){
+    switch (key) {
+        case "okay":
+            old_player_score.push(parseInt(player_score.innerHTML))
+            player_score.innerHTML = parseInt(player_score.innerHTML) - parseInt(input_score.innerHTML)
+            player_last_scored.push(parseInt(input_score.innerHTML))
+            player_leg_scored.push(parseInt(input_score.innerHTML))
+            player_last_score.innerHTML = player_last_scored[player_last_scored.length - 1]
+            input_score.innerHTML = 0
+            calculateAverage("okay")
+            break;
+        case "undo":
             input_score.innerHTML = 0;
             input_score.classList.add("btn-outline-dark")
             input_score.classList.remove("btn-outline-warning")
@@ -73,36 +80,51 @@ for(let i = 0; i < buttons.length; i++){
                 old_player_score.pop()
                 player_last_scored.pop()
                 player_leg_scored.pop()
+                player_last_score.innerHTML = player_last_scored[player_last_scored.length - 1]
                 calculateAverage("undo")
-                player_last_score.innerHTML = player_last_scored[player_last_scored.length - 1]
             }
-        }
-        if (buttons[i].value == "togo"){
-            if (parseInt(player_score.innerHTML) <= 170 && !not_checkable.includes(parseInt(player_score.innerHTML))){
-                old_player_score.push(parseInt(player_score.innerHTML))
-                player_last_scored.push(parseInt(player_score.innerHTML))
-                player_leg_scored.push(parseInt(player_score.innerHTML))
-                player_score.innerHTML = 501
-                opponent_score.innerHTML = 501
-                player_legs_score.innerHTML = parseInt(player_legs_score.innerHTML) + 1
-                player_last_score.innerHTML = player_last_scored[player_last_scored.length - 1]
-                calculateAverage("togo")
-            }
-        }
-    })
+            break;
+        case "hotkey":
+            old_player_score.push(parseInt(player_score.innerHTML))
+            player_score.innerHTML = parseInt(player_score.innerHTML) - parseInt(value)
+            player_last_scored.push(parseInt(value))
+            player_leg_scored.push(parseInt(value))
+            player_last_score.innerHTML = player_last_scored[player_last_scored.length - 1]
+            input_score.innerHTML = 0
+            calculateAverage("hotkey")
+            break;
+        case "clear":
+            input_score.innerHTML = 0;
+            input_score.classList.add("btn-outline-dark")
+            input_score.classList.remove("btn-outline-warning")
+            break;
+    }
 }
 
-function calculateAverage(value) {
-    if (value == "togo"){
-        player_last_scored.push(0)
-        player_rounds += 1
-        player_rounds_leg = 0
-        player_leg_scored = [0]
-    }
-    else if (value == "undo") {
+function newLeg() {
+    old_player_score.push(parseInt(player_score.innerHTML))
+    player_last_scored.push(parseInt(player_score.innerHTML))
+    player_leg_scored.push(parseInt(player_score.innerHTML))
+    player_score.innerHTML = 501
+    opponent_score.innerHTML = 501
+    player_legs_score.innerHTML = parseInt(player_legs_score.innerHTML) + 1
+    player_last_score.innerHTML = player_last_scored[player_last_scored.length - 1]
+    player_rounds += 1
+    player_rounds_leg.push(0)
+    player_leg_average = 0
+    calculateAverage("togo")
+}
+
+function calculateAverage(key) {
+    if (key == "undo") {
         player_rounds -= 1
-        player_rounds_leg -= 1
-        if (player_rounds_leg == 0 && player_rounds != 0){
+        if (player_rounds_leg[parseInt(player_legs_score.innerHTML)] - 1 != 0){
+            player_rounds_leg[parseInt(player_legs_score.innerHTML)] -= 1
+        }
+        else {
+            player_rounds_leg.pop()
+        }
+        if (player_rounds_leg[parseInt(player_legs_score.innerHTML)] == 0 && player_rounds != 0){
             player_leg_average = 0
         }
         else if (player_rounds == 0) {
@@ -110,17 +132,13 @@ function calculateAverage(value) {
             player_overall_average = 0
         }
     }
-    else {
+    else if (key !== "togo"){
         player_rounds += 1
-        player_rounds_leg += 1
+        player_rounds_leg[parseInt(player_legs_score.innerHTML)] += 1
     }
-    player_scored_leg = player_leg_scored.reduce(function (a,b){return a+b;})
     player_scored = player_last_scored.reduce(function (a,b){return a+b;})
-    if (value == "togo"){
-        player_leg_average = 0
-    }
-    else if (player_rounds_leg != 0) {
-        player_leg_average = player_scored_leg / player_rounds_leg
+    if (player_rounds_leg[parseInt(player_legs_score.innerHTML)] != 0) {
+        player_leg_average = (501 - player_score.innerHTML) / player_rounds_leg[parseInt(player_legs_score.innerHTML)]
     }
     if (player_rounds != 0){
         player_overall_average = player_scored / player_rounds
