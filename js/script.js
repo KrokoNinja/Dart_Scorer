@@ -16,8 +16,6 @@ let old_player_score = []
 let player_rounds = 0
 let player_rounds_leg = [0]
 let player_last_scored = [0]
-let player_leg_scored = []
-let player_scored = 0
 let player_leg_average = []
 let player_overall_average = []
 
@@ -63,7 +61,6 @@ function buttonPressed(key, value = 0){
             old_player_score.push(parseInt(player_score.innerHTML))
             player_score.innerHTML = parseInt(player_score.innerHTML) - parseInt(input_score.innerHTML)
             player_last_scored.push(parseInt(input_score.innerHTML))
-            player_leg_scored.push(parseInt(input_score.innerHTML))
             player_last_score.innerHTML = player_last_scored[player_last_scored.length - 1]
             input_score.innerHTML = 0
             calculateAverage("okay")
@@ -75,7 +72,6 @@ function buttonPressed(key, value = 0){
             old_player_score.push(parseInt(player_score.innerHTML))
             player_score.innerHTML = parseInt(player_score.innerHTML) - parseInt(value)
             player_last_scored.push(parseInt(value))
-            player_leg_scored.push(parseInt(value))
             player_last_score.innerHTML = player_last_scored[player_last_scored.length - 1]
             input_score.innerHTML = 0
             calculateAverage("hotkey")
@@ -91,7 +87,6 @@ function buttonPressed(key, value = 0){
 function newLeg() {
     old_player_score.push(parseInt(player_score.innerHTML))
     player_last_scored.push(parseInt(player_score.innerHTML))
-    player_leg_scored.push(parseInt(player_score.innerHTML))
     player_score.innerHTML = 501
     opponent_score.innerHTML = 501
     player_legs_score.innerHTML = parseInt(player_legs_score.innerHTML) + 1
@@ -113,7 +108,6 @@ function undoScore() {
         player_score.innerHTML = old_player_score[old_player_score.length - 1]
         old_player_score.pop()
         player_last_scored.pop()
-        player_leg_scored.pop()
         player_last_score.innerHTML = player_last_scored[player_last_scored.length - 1]
         player_rounds -= 1
         if (player_rounds_leg.length >= parseInt(player_legs_score.innerHTML) + 2){
@@ -138,7 +132,7 @@ function calculateAverage(key) {
         player_rounds += 1
         player_rounds_leg[parseInt(player_legs_score.innerHTML)] += 1
     }
-    player_scored = player_last_scored.reduce(function (a,b){return a+b;})
+    let player_scored = player_last_scored.reduce(function (a,b){return a+b;})
     if (player_rounds_leg[parseInt(player_legs_score.innerHTML)] != 0) {
         player_leg_average = (501 - player_score.innerHTML) / player_rounds_leg[parseInt(player_legs_score.innerHTML)]
     }
