@@ -19,6 +19,17 @@ let player_last_scored = [0]
 let player_leg_average = []
 let player_overall_average = []
 
+let lastTouchEnd = 0
+document.addEventListener("touchstart", function (e) {
+    lastTouchEnd = e.timeStamp
+})
+document.addEventListener("touchend", function (e){
+    const now = e.timeStamp
+    if (now-lastTouchEnd <= 10){
+        e.preventDefault()
+    }
+})
+
 document.addEventListener("keyup", (pressed) => {
     for(let i = 0; i < buttons.length; i++){
         buttons[i].blur()
