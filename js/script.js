@@ -30,6 +30,15 @@ document.addEventListener("touchend", function (e){
     }
 })
 
+
+function doubleTapPreventZoom(event) {
+    const now = event.timeStamp;
+    if (now - lastTouchEnd <= 300) {
+        event.preventDefault();
+    }
+    lastTouchEnd = now;
+}
+
 document.addEventListener("keyup", (pressed) => {
     for(let i = 0; i < buttons.length; i++){
         buttons[i].blur()
