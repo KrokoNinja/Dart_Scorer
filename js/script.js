@@ -20,6 +20,9 @@ let player_leg_average = []
 let player_overall_average = []
 
 document.addEventListener("keyup", (pressed) => {
+    for(let i = 0; i < buttons.length; i++){
+        buttons[i].blur()
+    }
     var name = pressed.key;
     var code = pressed.code;
      // Alert the key name and key code on keydown
@@ -48,6 +51,7 @@ document.addEventListener("keyup", (pressed) => {
     if (code == "Enter" && !input_score.classList.contains("btn-outline-warning")){
         buttonPressed("okay")
     }
+
 })
 
 for(let i = 0; i < buttons.length; i++){
