@@ -33,7 +33,7 @@ document.addEventListener("touchend", function (e){
 
 function doubleTapPreventZoom(event) {
     const now = event.timeStamp;
-    if (now - lastTouchEnd <= 500) {
+    if (now - lastTouchEnd <= 200) {
         event.preventDefault();
     }
     lastTouchEnd = now;
