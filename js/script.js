@@ -19,6 +19,37 @@ let player_last_scored = [0]
 let player_leg_average = []
 let player_overall_average = []
 
+document.addEventListener("keyup", (pressed) => {
+    var name = pressed.key;
+    var code = pressed.code;
+     // Alert the key name and key code on keydown
+    if (code.startsWith("Digit")){
+        if (input_score.innerHTML == 0){
+            input_score.innerHTML = name
+        }
+        else{
+            input_score.innerHTML += name
+        }
+        if (parseInt(input_score.innerHTML) > 180){
+            input_score.classList.remove("btn-outline-dark")
+            input_score.classList.add("btn-outline-warning")
+        }
+    }
+    if (code == "Backspace"){
+        input_score.innerHTML = input_score.innerHTML.slice(0,-1)
+        if (input_score.innerHTML == ""){
+            input_score.innerHTML = 0
+        }
+        if (parseInt(input_score.innerHTML) < 180){
+            input_score.classList.add("btn-outline-dark")
+            input_score.classList.remove("btn-outline-warning")
+        }
+    }
+    if (code == "Enter" && !input_score.classList.contains("btn-outline-warning")){
+        buttonPressed("okay")
+    }
+})
+
 for(let i = 0; i < buttons.length; i++){
     buttons[i].addEventListener("click", function (){
         if (!buttons[i].classList.contains("hotkey") && input_score.innerHTML.trim() != "0" && buttons[i].value != "togo" && buttons[i].value != "undo" && buttons[i].value != "okay"){
@@ -54,6 +85,7 @@ for(let i = 0; i < buttons.length; i++){
         }
     })
 }
+
 
 function buttonPressed(key, value = 0){
     switch (key) {
