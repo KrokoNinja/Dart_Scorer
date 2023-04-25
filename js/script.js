@@ -32,6 +32,7 @@ let opponent_last_scored = [0];
 let opponent_leg_average = [];
 let opponent_overall_average = [];
 
+//Prevent double tap zoom on mobile
 let lastTouchEnd = 0;
 document.addEventListener("touchstart", function (e) {
 	lastTouchEnd = e.timeStamp;
@@ -141,7 +142,11 @@ for (let i = 0; i < buttons.length; i++) {
 	});
 }
 
-function buttonPressed(key, value = 0) {
+/**
+ * Set button actions for the special keys "okay", "undo", "hotkey" & "clear"
+ * @param {String} key
+ */
+function buttonPressed(key) {
 	switch (key) {
 		case "okay":
 			old_player_score.push(parseInt(player_score.innerHTML));
@@ -174,6 +179,9 @@ function buttonPressed(key, value = 0) {
 	}
 }
 
+/**
+ * Reset stats for a new Leg
+ */
 function newLeg() {
 	old_player_score.push(parseInt(player_score.innerHTML));
 	player_last_scored.push(parseInt(player_score.innerHTML));
@@ -188,6 +196,9 @@ function newLeg() {
 	calculateAverage("togo");
 }
 
+/**
+ * Undo score and stats to the previous step
+ */
 function undoScore() {
 	input_score.innerHTML = 0;
 	input_score.classList.add("btn-outline-dark");
@@ -223,6 +234,10 @@ function undoScore() {
 	}
 }
 
+/**
+ * Calculate the Leg and Overall Average
+ * @param {String} key
+ */
 function calculateAverage(key) {
 	if (key !== "togo" && key !== "undo") {
 		player_rounds += 1;
