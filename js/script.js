@@ -21,6 +21,16 @@ const opponent_score = document.getElementById("opponent_score");
 let opponent_legs_score = document.getElementById("opponent_legs_count");
 let opponent_sets_score = document.getElementById("opponent_sets_count");
 let opponent_last_score = document.getElementById("opponent_last");
+let opponent_average_leg = document.getElementById("opponent_average_leg");
+let opponent_average_overall = document.getElementById(
+	"opponent_average_overall"
+);
+let opponent_rounds = 0;
+let old_opponent_score = [];
+let opponent_rounds_leg = [0];
+let opponent_last_scored = [0];
+let opponent_leg_average = [];
+let opponent_overall_average = [];
 
 let lastTouchEnd = 0;
 document.addEventListener("touchstart", function (e) {
